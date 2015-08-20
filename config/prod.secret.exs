@@ -9,7 +9,5 @@ config :elixir_friends, ElixirFriends.Endpoint,
 # Configure your database
 config :elixir_friends, ElixirFriends.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "elixir_friends_prod",
+  url: System.get_env("DATABASE_URL"),
   pool_size: 20
