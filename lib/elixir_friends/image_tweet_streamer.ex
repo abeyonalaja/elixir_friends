@@ -1,6 +1,7 @@
 defmodule ElixirFriends.ImageTweetStreamer do
   def stream(search_term) do
-    IO.puts("Streamig")
+    IO.puts("Streamig ")
+    IO.puts(search_term)
     ExTwitter.stream_filter(track: search_term)
     |> Stream.filter(&has_images?/1)
     |> Stream.map(&store_tweet/1)
