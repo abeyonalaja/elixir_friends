@@ -36,7 +36,8 @@ defmodule ElixirFriends.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:oauth, github: "tim/erlang-oauth"},
-     {:extwitter, "~> 0.4"}
+     {:extwitter, "~> 0.4"},
+     {:scrivener, "~> 0.13.0"}
     ]
   end
 end

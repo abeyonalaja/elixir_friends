@@ -1,13 +1,18 @@
 defmodule ElixirFriends.PostController do
   use ElixirFriends.Web, :controller
+  import Ecto.Query
 
   alias ElixirFriends.Post
 
+
   plug :scrub_params, "post" when action in [:create, :update]
 
-  def index(conn, _params) do
-    posts = Repo.all(Post)
-    render(conn, "index.html", posts: posts)
+  def index(conn, params) do
+    posts_page = Post
+    |> order_by([p], desc: p.inserted_at)
+    |> ElixirFriends.Repo.paginate(page: params["page"])
+
+    render(conn, "index.html", posts_page: posts_page)
   end
 
   def new(conn, _params) do
@@ -15,18 +20,18 @@ defmodule ElixirFriends.PostController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"post" => post_params}) do
-    changeset = Post.changeset(%Post{}, post_params)
+  # def create(conn, %{"post" => post_params}) do
+  #   changeset = Post.changeset(%Post{}, post_params)
 
-    case Repo.insert(changeset) do
-      {:ok, _post} ->
-        conn
-        |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: post_path(conn, :index))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-  end
+  #   case Repo.insert(changeset) do
+  #     {:ok, _post} ->
+  #       conn
+  #       |> put_flash(:info, "Post created successfully.")
+  #       |> redirect(to: post_path(conn, :index))
+  #     {:error, changeset} ->
+  #       render(conn, "new.html", changeset: changeset)
+  #   end
+  # end
 
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
@@ -62,6 +67,6 @@ defmodule ElixirFriends.PostController do
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: post_path(conn, :index))
+    # |> redirect(to: post_path(conn, :index))
   end
 end
