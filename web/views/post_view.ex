@@ -5,7 +5,7 @@ defmodule ElixirFriends.PostView do
   def pagination_links(paginator) do
     links = page_numbers(paginator)
             |> Enum.map(&page_link/1)
-    content_tag(:ul, links)
+    content_tag(:div, links, class: "ui pagination menu")
   end
 
   def page_numbers(paginator) do

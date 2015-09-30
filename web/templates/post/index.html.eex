@@ -12,7 +12,7 @@
           </div>
           <div class="content">
             <div class="header">
-              Elixirsips
+              <%= post.username %>
             </div>
             <div class="meta">
               <span class="date"><%= post.inserted_at %></span>
